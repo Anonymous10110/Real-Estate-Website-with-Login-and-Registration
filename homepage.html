@@ -4,13 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Prime Properties | Find Your Dream Home</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         :root {
             --primary: #2c3e50;
             --secondary: #3498db;
             --accent: #e74c3c;
-            --light: #ecf0f1;
-            --dark: #2c3e50;
+            --light: #f8f9fa;
+            --dark: #343a40;
+            --gray: #6c757d;
         }
         
         * {
@@ -35,24 +37,32 @@
         header {
             background-color: white;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            padding: 20px 0;
+            padding: 15px 0;
             position: sticky;
             top: 0;
-            z-index: 100;
+            z-index: 1000;
         }
         
         .logo {
-            font-size: 28px;
+            font-size: 24px;
             font-weight: 700;
             color: var(--primary);
+            display: flex;
+            align-items: center;
         }
         
         .logo span {
             color: var(--accent);
         }
         
+        .logo i {
+            margin-right: 10px;
+            color: var(--accent);
+        }
+        
         .hero {
-            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('https://images.unsplash.com/photo-1560518883-ce09059eeffa?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
+            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), 
+                        url('https://images.unsplash.com/photo-1560518883-ce09059eeffa?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
             background-size: cover;
             background-position: center;
             color: white;
@@ -62,39 +72,50 @@
         }
         
         .hero h1 {
-            font-size: 48px;
+            font-size: 42px;
             margin-bottom: 20px;
         }
         
         .hero p {
-            font-size: 20px;
+            font-size: 18px;
             max-width: 700px;
             margin: 0 auto 30px;
+            opacity: 0.9;
         }
         
         .search-bar {
             display: flex;
             max-width: 800px;
             margin: 0 auto;
+            border-radius: 50px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
         }
         
         .search-bar input {
             flex: 1;
-            padding: 15px;
+            padding: 15px 25px;
             border: none;
-            border-radius: 4px 0 0 4px;
             font-size: 16px;
+        }
+        
+        .search-bar input:focus {
+            outline: none;
         }
         
         .search-bar button {
             background-color: var(--accent);
             color: white;
             border: none;
-            padding: 0 25px;
-            border-radius: 0 4px 4px 0;
+            padding: 0 30px;
             cursor: pointer;
             font-size: 16px;
             font-weight: 600;
+            transition: background-color 0.3s;
+        }
+        
+        .search-bar button:hover {
+            background-color: #c0392b;
         }
         
         .section-title {
@@ -102,6 +123,19 @@
             margin-bottom: 40px;
             font-size: 32px;
             color: var(--primary);
+            position: relative;
+            padding-bottom: 15px;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background-color: var(--accent);
         }
         
         .properties {
@@ -116,17 +150,43 @@
             border-radius: 8px;
             overflow: hidden;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s;
+            transition: all 0.3s;
+            position: relative;
         }
         
         .property-card:hover {
-            transform: translateY(-5px);
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        }
+        
+        .property-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background-color: var(--accent);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: 14px;
+            font-weight: 600;
+            z-index: 1;
         }
         
         .property-image {
             height: 250px;
             background-size: cover;
             background-position: center;
+            position: relative;
+        }
+        
+        .property-image::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.5), transparent);
         }
         
         .property-details {
@@ -141,19 +201,30 @@
         }
         
         .property-address {
-            color: #7f8c8d;
+            color: var(--gray);
             margin-bottom: 15px;
+            font-size: 15px;
+        }
+        
+        .property-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: var(--primary);
         }
         
         .property-features {
             display: flex;
             justify-content: space-between;
             margin-bottom: 15px;
+            flex-wrap: wrap;
+            gap: 10px;
         }
         
         .property-features span {
             display: flex;
             align-items: center;
+            font-size: 14px;
         }
         
         .property-features i {
@@ -171,18 +242,30 @@
             cursor: pointer;
             font-size: 16px;
             font-weight: 600;
-            transition: background-color 0.3s;
+            transition: all 0.3s;
             text-decoration: none;
             text-align: center;
         }
         
         .btn:hover {
             background-color: #2980b9;
+            transform: translateY(-2px);
         }
         
         .btn-block {
             display: block;
             width: 100%;
+        }
+        
+        .btn-outline {
+            background-color: transparent;
+            border: 2px solid var(--secondary);
+            color: var(--secondary);
+        }
+        
+        .btn-outline:hover {
+            background-color: var(--secondary);
+            color: white;
         }
         
         .nav-container {
@@ -201,6 +284,7 @@
             text-decoration: none;
             color: var(--dark);
             font-weight: 500;
+            transition: color 0.3s;
         }
         
         .nav-links a:hover {
@@ -218,6 +302,20 @@
             height: 40px;
             border-radius: 50%;
             margin-right: 10px;
+            object-fit: cover;
+        }
+        
+        .user-name {
+            font-weight: 500;
+        }
+        
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 24px;
+            color: var(--dark);
+            cursor: pointer;
         }
         
         footer {
@@ -251,6 +349,11 @@
             background-color: var(--accent);
         }
         
+        .footer-column p {
+            margin-bottom: 15px;
+            opacity: 0.8;
+        }
+        
         .footer-column ul {
             list-style: none;
         }
@@ -269,19 +372,126 @@
             color: white;
         }
         
+        .social-links {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .social-links a {
+            color: white;
+            background-color: rgba(255, 255, 255, 0.1);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+        }
+        
+        .social-links a:hover {
+            background-color: var(--accent);
+            transform: translateY(-3px);
+        }
+        
         .copyright {
             text-align: center;
             padding-top: 20px;
             border-top: 1px solid rgba(255, 255, 255, 0.1);
             color: #bdc3c7;
+            font-size: 14px;
+        }
+        
+        /* Responsive styles */
+        @media (max-width: 992px) {
+            .hero h1 {
+                font-size: 36px;
+            }
+            
+            .hero p {
+                font-size: 16px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            .nav-links {
+                position: fixed;
+                top: 70px;
+                left: -100%;
+                width: 100%;
+                height: calc(100vh - 70px);
+                background-color: white;
+                flex-direction: column;
+                align-items: center;
+                padding: 40px 20px;
+                transition: all 0.5s ease;
+                box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+                z-index: 999;
+            }
+            
+            .nav-links.active {
+                left: 0;
+            }
+            
+            .nav-links a {
+                margin: 15px 0;
+                font-size: 18px;
+            }
+            
+            .user-profile {
+                margin: 15px 0;
+            }
+            
+            .properties {
+                grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .hero {
+                padding: 80px 20px;
+            }
+            
+            .hero h1 {
+                font-size: 28px;
+            }
+            
+            .search-bar {
+                flex-direction: column;
+                border-radius: 4px;
+                overflow: visible;
+                gap: 10px;
+            }
+            
+            .search-bar input,
+            .search-bar button {
+                width: 100%;
+                border-radius: 4px;
+            }
+            
+            .section-title {
+                font-size: 26px;
+            }
         }
     </style>
 </head>
 <body>
     <header>
         <div class="container nav-container">
-            <div class="logo">Prime<span>Properties</span></div>
-            <div class="nav-links">
+            <div class="logo">
+                <i class="fas fa-home"></i>
+                <span>Prime</span>Properties
+            </div>
+            
+            <button class="mobile-menu-btn" id="mobileMenuBtn">
+                <i class="fas fa-bars"></i>
+            </button>
+            
+            <div class="nav-links" id="navLinks">
                 <a href="homepage.html">Home</a>
                 <a href="#">Properties</a>
                 <a href="#">Agents</a>
@@ -289,7 +499,7 @@
                 <a href="#">Contact</a>
                 <div class="user-profile">
                     <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="User">
-                    <span>John D.</span>
+                    <span class="user-name">John D.</span>
                 </div>
             </div>
         </div>
@@ -301,7 +511,7 @@
             <p>Discover the perfect property that matches your lifestyle and budget from our extensive collection of listings.</p>
             <div class="search-bar">
                 <input type="text" placeholder="Search by location, price, or property type...">
-                <button>Search</button>
+                <button><i class="fas fa-search"></i> Search</button>
             </div>
         </div>
     </section>
@@ -310,28 +520,32 @@
         <h2 class="section-title">Featured Properties</h2>
         <div class="properties">
             <div class="property-card">
+                <div class="property-badge">Featured</div>
                 <div class="property-image" style="background-image: url('https://images.unsplash.com/photo-1564013799919-ab600027ffc6?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');"></div>
                 <div class="property-details">
                     <div class="property-price">$450,000</div>
+                    <h3 class="property-title">Modern Family Home</h3>
                     <div class="property-address">123 Main St, Anytown, USA</div>
                     <div class="property-features">
-                        <span><i>🛏️</i> 3 Beds</span>
-                        <span><i>🚿</i> 2 Baths</span>
-                        <span><i>📏</i> 1,850 sqft</span>
+                        <span><i class="fas fa-bed"></i> 3 Beds</span>
+                        <span><i class="fas fa-bath"></i> 2 Baths</span>
+                        <span><i class="fas fa-ruler-combined"></i> 1,850 sqft</span>
                     </div>
                     <a href="#" class="btn btn-block">View Details</a>
                 </div>
             </div>
             
             <div class="property-card">
+                <div class="property-badge">New</div>
                 <div class="property-image" style="background-image: url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');"></div>
                 <div class="property-details">
                     <div class="property-price">$725,000</div>
+                    <h3 class="property-title">Luxury Villa</h3>
                     <div class="property-address">456 Oak Ave, Somewhere, USA</div>
                     <div class="property-features">
-                        <span><i>🛏️</i> 4 Beds</span>
-                        <span><i>🚿</i> 3 Baths</span>
-                        <span><i>📏</i> 2,400 sqft</span>
+                        <span><i class="fas fa-bed"></i> 4 Beds</span>
+                        <span><i class="fas fa-bath"></i> 3 Baths</span>
+                        <span><i class="fas fa-ruler-combined"></i> 2,400 sqft</span>
                     </div>
                     <a href="#" class="btn btn-block">View Details</a>
                 </div>
@@ -341,11 +555,12 @@
                 <div class="property-image" style="background-image: url('https://images.unsplash.com/photo-1605276374104-dee2a0ed3cd6?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');"></div>
                 <div class="property-details">
                     <div class="property-price">$325,000</div>
+                    <h3 class="property-title">Cozy Cottage</h3>
                     <div class="property-address">789 Pine Rd, Nowhere, USA</div>
                     <div class="property-features">
-                        <span><i>🛏️</i> 2 Beds</span>
-                        <span><i>🚿</i> 1 Bath</span>
-                        <span><i>📏</i> 1,200 sqft</span>
+                        <span><i class="fas fa-bed"></i> 2 Beds</span>
+                        <span><i class="fas fa-bath"></i> 1 Bath</span>
+                        <span><i class="fas fa-ruler-combined"></i> 1,200 sqft</span>
                     </div>
                     <a href="#" class="btn btn-block">View Details</a>
                 </div>
@@ -360,25 +575,28 @@
                 <div class="property-image" style="background-image: url('https://images.unsplash.com/photo-1512917774080-9991f1c4c750?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');"></div>
                 <div class="property-details">
                     <div class="property-price">$550,000</div>
+                    <h3 class="property-title">Spacious Townhouse</h3>
                     <div class="property-address">321 Elm St, Anywhere, USA</div>
                     <div class="property-features">
-                        <span><i>🛏️</i> 3 Beds</span>
-                        <span><i>🚿</i> 2.5 Baths</span>
-                        <span><i>📏</i> 2,100 sqft</span>
+                        <span><i class="fas fa-bed"></i> 3 Beds</span>
+                        <span><i class="fas fa-bath"></i> 2.5 Baths</span>
+                        <span><i class="fas fa-ruler-combined"></i> 2,100 sqft</span>
                     </div>
                     <a href="#" class="btn btn-block">View Details</a>
                 </div>
             </div>
             
             <div class="property-card">
+                <div class="property-badge">Hot Deal</div>
                 <div class="property-image" style="background-image: url('https://images.unsplash.com/photo-1493809842364-78817add7ffb?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');"></div>
                 <div class="property-details">
                     <div class="property-price">$1,200,000</div>
+                    <h3 class="property-title">Executive Mansion</h3>
                     <div class="property-address">654 Maple Blvd, Everywhere, USA</div>
                     <div class="property-features">
-                        <span><i>🛏️</i> 5 Beds</span>
-                        <span><i>🚿</i> 4 Baths</span>
-                        <span><i>📏</i> 3,800 sqft</span>
+                        <span><i class="fas fa-bed"></i> 5 Beds</span>
+                        <span><i class="fas fa-bath"></i> 4 Baths</span>
+                        <span><i class="fas fa-ruler-combined"></i> 3,800 sqft</span>
                     </div>
                     <a href="#" class="btn btn-block">View Details</a>
                 </div>
@@ -388,16 +606,21 @@
                 <div class="property-image" style="background-image: url('https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');"></div>
                 <div class="property-details">
                     <div class="property-price">$275,000</div>
+                    <h3 class="property-title">Charming Bungalow</h3>
                     <div class="property-address">987 Cedar Ln, Someplace, USA</div>
                     <div class="property-features">
-                        <span><i>🛏️</i> 2 Beds</span>
-                        <span><i>🚿</i> 1 Bath</span>
-                        <span><i>📏</i> 950 sqft</span>
+                        <span><i class="fas fa-bed"></i> 2 Beds</span>
+                        <span><i class="fas fa-bath"></i> 1 Bath</span>
+                        <span><i class="fas fa-ruler-combined"></i> 950 sqft</span>
                     </div>
                     <a href="#" class="btn btn-block">View Details</a>
                 </div>
             </div>
         </div>
+    </section>
+    
+    <section class="container" style="margin-bottom: 50px; text-align: center;">
+        <a href="#" class="btn btn-outline" style="padding: 12px 30px; display: inline-block;">View All Properties</a>
     </section>
     
     <footer>
@@ -406,6 +629,12 @@
                 <div class="footer-column">
                     <h3>Prime Properties</h3>
                     <p>Finding your dream home is our priority. We connect buyers and sellers with the best properties in the market.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
                 </div>
                 <div class="footer-column">
                     <h3>Quick Links</h3>
@@ -420,10 +649,10 @@
                 <div class="footer-column">
                     <h3>Contact Us</h3>
                     <ul>
-                        <li>123 Real Estate Ave</li>
-                        <li>Anytown, USA 12345</li>
-                        <li>Phone: (555) 123-4567</li>
-                        <li>Email: info@primeproperties.com</li>
+                        <li><i class="fas fa-map-marker-alt"></i> 123 Real Estate Ave</li>
+                        <li><i class="fas fa-city"></i> Anytown, USA 12345</li>
+                        <li><i class="fas fa-phone"></i> (555) 123-4567</li>
+                        <li><i class="fas fa-envelope"></i> info@primeproperties.com</li>
                     </ul>
                 </div>
             </div>
@@ -432,5 +661,33 @@
             </div>
         </div>
     </footer>
+
+    <script>
+        // Mobile menu toggle
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const navLinks = document.getElementById('navLinks');
+        
+        mobileMenuBtn.addEventListener('click', function() {
+            navLinks.classList.toggle('active');
+            const icon = this.querySelector('i');
+            if (navLinks.classList.contains('active')) {
+                icon.classList.remove('fa-bars');
+                icon.classList.add('fa-times');
+            } else {
+                icon.classList.remove('fa-times');
+                icon.classList.add('fa-bars');
+            }
+        });
+        
+        // Close menu when clicking on a link
+        const navItems = navLinks.querySelectorAll('a');
+        navItems.forEach(item => {
+            item.addEventListener('click', function() {
+                navLinks.classList.remove('active');
+                mobileMenuBtn.querySelector('i').classList.remove('fa-times');
+                mobileMenuBtn.querySelector('i').classList.add('fa-bars');
+            });
+        });
+    </script>
 </body>
 </html>
