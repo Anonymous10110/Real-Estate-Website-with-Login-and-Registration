@@ -4,13 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Prime Properties | Login</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         :root {
             --primary: #2c3e50;
             --secondary: #3498db;
             --accent: #e74c3c;
-            --light: #ecf0f1;
-            --dark: #2c3e50;
+            --light: #f8f9fa;
+            --dark: #343a40;
+            --gray: #6c757d;
         }
         
         * {
@@ -24,6 +26,9 @@
             background-color: var(--light);
             color: var(--dark);
             line-height: 1.6;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
         }
         
         .container {
@@ -35,64 +40,113 @@
         header {
             background-color: white;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            padding: 20px 0;
+            padding: 15px 0;
+            position: relative;
+            z-index: 100;
         }
         
         .logo {
-            font-size: 28px;
+            font-size: 24px;
             font-weight: 700;
             color: var(--primary);
+            display: flex;
+            align-items: center;
         }
         
         .logo span {
             color: var(--accent);
         }
         
+        .logo i {
+            margin-right: 10px;
+            color: var(--accent);
+        }
+        
         .auth-container {
             display: flex;
+            flex: 1;
+        }
+        
+        .auth-image {
+            flex: 1;
+            background: linear-gradient(rgba(44, 62, 80, 0.7), rgba(44, 62, 80, 0.7)), 
+                        url('https://images.unsplash.com/photo-1560518883-ce09059eeffa?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            flex-direction: column;
             justify-content: center;
+            padding: 40px;
+            color: white;
+        }
+        
+        .auth-image h2 {
+            font-size: 32px;
+            margin-bottom: 20px;
+        }
+        
+        .auth-image p {
+            font-size: 18px;
+            max-width: 500px;
+        }
+        
+        .auth-card-container {
+            width: 450px;
+            display: flex;
             align-items: center;
-            min-height: 80vh;
+            justify-content: center;
+            padding: 40px;
+            background-color: white;
         }
         
         .auth-card {
-            background-color: white;
-            border-radius: 8px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-            padding: 40px;
             width: 100%;
-            max-width: 450px;
         }
         
         .auth-title {
-            font-size: 24px;
+            font-size: 28px;
             margin-bottom: 30px;
             color: var(--primary);
-            text-align: center;
+            font-weight: 600;
+        }
+        
+        .auth-subtitle {
+            color: var(--gray);
+            margin-bottom: 30px;
         }
         
         .form-group {
             margin-bottom: 20px;
+            position: relative;
         }
         
         .form-group label {
             display: block;
             margin-bottom: 8px;
             font-weight: 600;
+            color: var(--dark);
         }
         
         .form-control {
             width: 100%;
-            padding: 12px 15px;
+            padding: 12px 15px 12px 40px;
             border: 1px solid #ddd;
             border-radius: 4px;
             font-size: 16px;
-            transition: border 0.3s;
+            transition: all 0.3s;
         }
         
         .form-control:focus {
             border-color: var(--secondary);
             outline: none;
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+        }
+        
+        .input-icon {
+            position: absolute;
+            left: 15px;
+            top: 40px;
+            color: var(--gray);
         }
         
         .btn {
@@ -105,23 +159,26 @@
             cursor: pointer;
             font-size: 16px;
             font-weight: 600;
-            transition: background-color 0.3s;
+            transition: all 0.3s;
             width: 100%;
         }
         
         .btn:hover {
             background-color: #2980b9;
+            transform: translateY(-2px);
         }
         
         .auth-footer {
             text-align: center;
             margin-top: 20px;
+            color: var(--gray);
         }
         
         .auth-footer a {
             color: var(--secondary);
             text-decoration: none;
             font-weight: 600;
+            margin-left: 5px;
         }
         
         .auth-footer a:hover {
@@ -139,46 +196,101 @@
             text-decoration: none;
             color: var(--dark);
             font-weight: 500;
+            transition: color 0.3s;
         }
         
         .nav-links a:hover {
             color: var(--secondary);
+        }
+        
+        .nav-links a.btn-register {
+            background-color: var(--accent);
+            color: white;
+            padding: 8px 15px;
+            border-radius: 4px;
+        }
+        
+        .nav-links a.btn-register:hover {
+            background-color: #c0392b;
+        }
+        
+        /* Responsive styles */
+        @media (max-width: 992px) {
+            .auth-image {
+                display: none;
+            }
+            
+            .auth-card-container {
+                width: 100%;
+                max-width: 500px;
+                margin: 0 auto;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .auth-card-container {
+                padding: 20px;
+            }
+            
+            .auth-title {
+                font-size: 24px;
+            }
+            
+            .nav-links a:not(.btn-register) {
+                display: none;
+            }
         }
     </style>
 </head>
 <body>
     <header>
         <div class="container nav-container">
-            <div class="logo">Prime<span>Properties</span></div>
+            <div class="logo">
+                <i class="fas fa-home"></i>
+                <span>Prime</span>Properties
+            </div>
             <div class="nav-links">
                 <a href="index.html">Login</a>
-                <a href="register.html">Register</a>
-                <a href="homepage.html">Browse Properties</a>
+                <a href="register.html" class="btn-register">Register</a>
             </div>
         </div>
     </header>
     
-    <main>
-        <div class="container auth-container">
+    <div class="auth-container">
+        <div class="auth-image">
+            <h2>Find Your Dream Home</h2>
+            <p>Join thousands of satisfied clients who found their perfect property through our platform. Login to access your saved properties and personalized recommendations.</p>
+        </div>
+        
+        <div class="auth-card-container">
             <div class="auth-card">
-                <h1 class="auth-title">Login to Your Account</h1>
+                <h1 class="auth-title">Welcome Back</h1>
+                <p class="auth-subtitle">Please enter your credentials to login</p>
+                
                 <form id="loginForm">
                     <div class="form-group">
-                        <label for="email">Email</label>
-                        <input type="email" id="email" class="form-control" required>
+                        <label for="email">Email Address</label>
+                        <i class="fas fa-envelope input-icon"></i>
+                        <input type="email" id="email" class="form-control" placeholder="Enter your email" required>
                     </div>
+                    
                     <div class="form-group">
                         <label for="password">Password</label>
-                        <input type="password" id="password" class="form-control" required>
+                        <i class="fas fa-lock input-icon"></i>
+                        <input type="password" id="password" class="form-control" placeholder="Enter your password" required>
                     </div>
-                    <button type="submit" class="btn">Login</button>
+                    
+                    <div class="form-group">
+                        <button type="submit" class="btn">Login</button>
+                    </div>
                 </form>
+                
                 <div class="auth-footer">
                     <p>Don't have an account? <a href="register.html">Register here</a></p>
                 </div>
             </div>
         </div>
-    </main>
+    </div>
 
     <script>
         document.getElementById('loginForm').addEventListener('submit', function(e) {
